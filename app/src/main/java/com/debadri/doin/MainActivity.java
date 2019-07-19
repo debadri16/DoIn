@@ -2,6 +2,7 @@ package com.debadri.doin;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -48,9 +49,15 @@ public class MainActivity extends AppCompatActivity {
                         realm.commitTransaction();
 
                         Toast.makeText(MainActivity.this, "New User Added", Toast.LENGTH_LONG).show();
+
                     } else {
                         Toast.makeText(MainActivity.this, "Welcome again", Toast.LENGTH_LONG).show();
                     }
+
+                    Intent intent=new Intent(MainActivity.this, TaskActivity.class);
+                    startActivity(intent);
+                    finish();
+
                 }
             }
         });
