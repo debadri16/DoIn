@@ -16,8 +16,9 @@ import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextInputEditText mUserName;
+    public static TextInputEditText mUserName;
     private Button mLoginBtn;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
