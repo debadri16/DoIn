@@ -35,7 +35,10 @@ public class TaskActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent i = getIntent();
+                String name=i.getStringExtra("UserName");
                 Intent intent=new Intent(TaskActivity.this, TodoActivity.class);
+                intent.putExtra("UserName",name);
                 startActivity(intent);
             }
         });

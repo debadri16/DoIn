@@ -25,6 +25,7 @@ public class TodoActivity extends AppCompatActivity {
     TextView mDisplayDate;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private static final String TAG = "MainActivity";
+    private String mUserName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,9 @@ public class TodoActivity extends AppCompatActivity {
         details = findViewById(R.id.main_details_et);
         color = findViewById(R.id.main_color_et);
         mDisplayDate = findViewById(R.id.main_date_tv);
+
+        Intent i = getIntent();
+        mUserName = i.getStringExtra("UserName");
 
         mDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -52,18 +56,18 @@ public class TodoActivity extends AppCompatActivity {
         Realm r = Realm.getDefaultInstance();
         r.beginTransaction();
         try{
-            Todo todo = new Todo();
-            todo.setUserName("sumon");
+            Todo todo = r.createObject(Todo.class);
+            todo.setUserName(mUserName);
             todo.setTodoItem(item.getText().toString());
             todo.setDetails(details.getText().toString());
             todo.setDuedate(mDisplayDate.getText().toString());
             todo.setColor(color.getText().toString());
-            RealmQuery<UserInfo> query = r.where(UserInfo.class).equalTo("userName", MainActivity.mUserName.getText().toString());
-            RealmResults<UserInfo> result = query.findAllAsync();
-            result.load();
+//            RealmQuery<Todo> query = r.where(Todo.class).equalTo("userName", mUserName);
+//            RealmResults<Todo> result = query.findAllAsync();
+//            result.load();
             r.commitTransaction();
             r.close();
-            Toast.makeText(this,result.toString(),Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"New task created",Toast.LENGTH_LONG).show();
         }
         catch (Exception e){
             r.cancelTransaction();
@@ -88,7 +92,6 @@ public class TodoActivity extends AppCompatActivity {
 
 
     public void DiscardTask(View view) {
-        Intent i=new Intent(this,TaskActivity.class);
-        startActivity(i);
+        finish();
     }
 }
