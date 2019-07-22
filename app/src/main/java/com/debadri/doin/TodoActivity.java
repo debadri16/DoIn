@@ -67,7 +67,7 @@ public class TodoActivity extends AppCompatActivity {
 //            result.load();
             r.commitTransaction();
             r.close();
-            Toast.makeText(this,"New task created",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"New todo created",Toast.LENGTH_LONG).show();
         }
         catch (Exception e){
             r.cancelTransaction();

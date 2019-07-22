@@ -6,12 +6,14 @@ import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import android.view.Menu;
 import android.view.View;
 
 import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -19,19 +21,42 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.Menu;
+
+import io.realm.Realm;
+import io.realm.RealmQuery;
+import io.realm.RealmResults;
 
 public class TaskActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    RecyclerView rv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //recylcer view
+        setContentView(R.layout.content_task);
+        rv=findViewById(R.id.recyclerTodo);
+        Realm r = Realm.getDefaultInstance();
+        RealmQuery<Todo> query = r.where(Todo.class).equalTo("userName", getIntent().getStringExtra("UserName"));
+        RealmResults<Todo> result = query.findAll();
+        Toast.makeText(this, result.toString(), Toast.LENGTH_LONG).show();
+        Adapter m = new Adapter(result,this);
+        rv.setLayoutManager(new LinearLayoutManager(this));
+        rv.setAdapter(m);
+
         setContentView(R.layout.activity_task);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
+
+
+
+        //"+" button
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
