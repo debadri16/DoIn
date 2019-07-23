@@ -38,20 +38,24 @@ public class TaskActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //recylcer view
-        setContentView(R.layout.content_task);
-        rv=findViewById(R.id.recyclerTodo);
-        Realm r = Realm.getDefaultInstance();
-        RealmQuery<Todo> query = r.where(Todo.class).equalTo("userName", getIntent().getStringExtra("UserName"));
-        RealmResults<Todo> result = query.findAll();
-        Toast.makeText(this, result.toString(), Toast.LENGTH_LONG).show();
-        Adapter m = new Adapter(result,this);
-        rv.setLayoutManager(new LinearLayoutManager(this));
-        rv.setAdapter(m);
+
+        //setContentView(R.layout.content_task);
+
 
         setContentView(R.layout.activity_task);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+//        //recylcer view
+//        rv=findViewById(R.id.recyclerTodo);
+//        Realm r = Realm.getDefaultInstance();
+//        RealmQuery<Todo> query = r.where(Todo.class).equalTo("userName", getIntent().getStringExtra("UserName"));
+//        RealmResults<Todo> result = query.findAll();
+//        //Toast.makeText(this, result.toString(), Toast.LENGTH_LONG).show();
+//        Adapter m = new Adapter(result,this);
+//        rv.setLayoutManager(new LinearLayoutManager(this));
+//        rv.setAdapter(m);
+
         FloatingActionButton fab = findViewById(R.id.fab);
 
 
@@ -74,6 +78,21 @@ public class TaskActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        //recylcer view
+        rv=findViewById(R.id.recyclerTodo);
+        Realm r = Realm.getDefaultInstance();
+        RealmQuery<Todo> query = r.where(Todo.class).equalTo("userName", getIntent().getStringExtra("UserName"));
+        RealmResults<Todo> result = query.findAll();
+        //Toast.makeText(this, result.toString(), Toast.LENGTH_LONG).show();
+        Adapter m = new Adapter(result,this);
+        rv.setLayoutManager(new LinearLayoutManager(this));
+        rv.setAdapter(m);
     }
 
     @Override
