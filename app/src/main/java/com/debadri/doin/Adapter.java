@@ -3,11 +3,13 @@ package com.debadri.doin;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,7 +39,14 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
         holder.todo.setText(todo.getTodoItem());
         holder.details.setText(todo.getDetails());
         holder.due.setText(todo.getDuedate());
-        holder.card.setBackgroundColor(Color.parseColor(todo.getColor()));
+        //holder.card.setBackgroundColor(Color.parseColor(todo.getColor()));
+        String color = todo.getColor();
+        if(color.equals("Green"))
+            holder.colorLayout.setBackgroundResource(R.drawable.recycler_shape_green);
+        else if(color.equals("Red"))
+            holder.colorLayout.setBackgroundResource(R.drawable.recycler_shape_red);
+        else if(color.equals("Yellow"))
+            holder.colorLayout.setBackgroundResource(R.drawable.recycler_shape_yellow);
     }
 
 
@@ -50,8 +59,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
         private TextView todo;
         private TextView details;
         private TextView due;
-        private TextView color;
         private ConstraintLayout card;
+        private ConstraintLayout colorLayout;
 
         public MyViewHolder(@NonNull View view) {
             super(view);
@@ -59,6 +68,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
             details = view.findViewById(R.id.details_tv);
             due = view.findViewById(R.id.due_tv);
             card=view.findViewById(R.id.rootView);
+            colorLayout=view.findViewById(R.id.recycler_color_consLayout);
         }
     }
 }

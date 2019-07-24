@@ -31,6 +31,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
+        android:alpha="0.7"
+        app:backgroundTint="#00BCD4"
         app:srcCompat="@drawable/baseline_add_black_24dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -39,7 +41,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|left"
         android:layout_margin="@dimen/fab_margin"
-        app:backgroundTint="#3E000000"
+        android:alpha="0.7"
+        app:backgroundTint="#CDDC39"
         app:srcCompat="@android:drawable/ic_delete" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
