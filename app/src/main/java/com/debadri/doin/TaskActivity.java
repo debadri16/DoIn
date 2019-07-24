@@ -57,6 +57,7 @@ public class TaskActivity extends AppCompatActivity
 //        rv.setAdapter(m);
 
         FloatingActionButton fab = findViewById(R.id.fab);
+        FloatingActionButton remove = findViewById(R.id.remove);
 
 
 
@@ -71,6 +72,15 @@ public class TaskActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
+
+        //"X" button
+        remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(TaskActivity.this, "hello", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

@@ -37,17 +37,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
         holder.todo.setText(todo.getTodoItem());
         holder.details.setText(todo.getDetails());
         holder.due.setText(todo.getDuedate());
-        holder.color.setText(todo.getColor());
-//        holder.gender.setText(person.getGender()==1?"Female":"Male");
-//        String d= person.getDept();
-//        if(d.equalsIgnoreCase("cse"))
-//            holder.card.setBackgroundColor(Color.parseColor("#f44336"));
-//        else if(d.equalsIgnoreCase("it"))
-//            holder.card.setBackgroundColor(Color.parseColor("#3F51B5"));
-//        else if(d.equalsIgnoreCase("ece"))
-//            holder.card.setBackgroundColor(Color.parseColor("#4CAF50"));
-//        else
-//            holder.card.setBackgroundColor(Color.parseColor("#FF9800"));
+        holder.card.setBackgroundColor(Color.parseColor(todo.getColor()));
     }
 
 
@@ -68,7 +58,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
             todo = view.findViewById(R.id.todo_tv);
             details = view.findViewById(R.id.details_tv);
             due = view.findViewById(R.id.due_tv);
-            color = view.findViewById(R.id.color_tv);
             card=view.findViewById(R.id.rootView);
         }
     }
