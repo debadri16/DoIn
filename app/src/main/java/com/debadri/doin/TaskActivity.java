@@ -85,7 +85,12 @@ public class TaskActivity extends AppCompatActivity
         remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(TaskActivity.this, "hello", Toast.LENGTH_SHORT).show();
+                Realm r = Realm.getDefaultInstance();
+                r.beginTransaction();
+                RealmResults<Todo> query = r.where(Todo.class).equalTo("userName", getIntent().getStringExtra("UserName")).findAll();
+                query.deleteAllFromRealm();
+                r.commitTransaction();
+                onStart();
             }
         });
 
