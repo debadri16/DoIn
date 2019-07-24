@@ -1,14 +1,19 @@
 package com.debadri.doin;
 
+import android.content.ClipData;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 
@@ -21,6 +26,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,6 +39,8 @@ public class TaskActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     RecyclerView rv;
+    Adapter mAdapter;
+    CoordinatorLayout coordinatorLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +54,7 @@ public class TaskActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        coordinatorLayout=findViewById(R.id.coordLayout);
 //        //recylcer view
 //        rv=findViewById(R.id.recyclerTodo);
 //        Realm r = Realm.getDefaultInstance();
@@ -58,7 +67,6 @@ public class TaskActivity extends AppCompatActivity
 
         FloatingActionButton fab = findViewById(R.id.fab);
         FloatingActionButton remove = findViewById(R.id.remove);
-
 
 
         //"+" button
@@ -100,9 +108,43 @@ public class TaskActivity extends AppCompatActivity
         RealmQuery<Todo> query = r.where(Todo.class).equalTo("userName", getIntent().getStringExtra("UserName"));
         RealmResults<Todo> result = query.findAll();
         //Toast.makeText(this, result.toString(), Toast.LENGTH_LONG).show();
-        Adapter m = new Adapter(result,this);
+        mAdapter = new Adapter(result,this);
         rv.setLayoutManager(new LinearLayoutManager(this));
-        rv.setAdapter(m);
+        rv.setAdapter(mAdapter);
+        enableSwipeToDeleteAndUndo();
+    }
+
+    private void enableSwipeToDeleteAndUndo() {
+        SwipeToDeleteCallback swipeToDeleteCallback = new SwipeToDeleteCallback(this) {
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+
+
+                final int position = viewHolder.getAdapterPosition();
+                final Todo item = mAdapter.getData().get(position);
+
+                mAdapter.removeItem(position);
+
+                Snackbar snackbar = Snackbar
+                        .make(coordinatorLayout, "Item was removed from the list.", Snackbar.LENGTH_LONG);
+                snackbar.setAction("UNDO", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+//                        mAdapter.restoreItem(item, position);
+//                        rv.scrollToPosition(position);
+                        float x=2;
+                    }
+                });
+
+                snackbar.setActionTextColor(Color.YELLOW);
+                snackbar.show();
+
+            }
+        };
+
+        ItemTouchHelper itemTouchhelper = new ItemTouchHelper(swipeToDeleteCallback);
+        itemTouchhelper.attachToRecyclerView(rv);
     }
 
     @Override
@@ -131,7 +173,7 @@ public class TaskActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            Toast.makeText(TaskActivity.this,"Clear all todo",Toast.LENGTH_LONG).show();
         }
 
         return super.onOptionsItemSelected(item);
@@ -145,16 +187,7 @@ public class TaskActivity extends AppCompatActivity
 
         if (id == R.id.nav_home) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_tools) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+            finish();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

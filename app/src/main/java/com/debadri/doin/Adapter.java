@@ -4,16 +4,19 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import io.realm.Realm;
 import io.realm.RealmResults;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
@@ -53,6 +56,32 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
     @Override
     public int getItemCount() {
         return realmResults.size();
+    }
+
+    public RealmResults<Todo> getData() {
+        return realmResults;
+    }
+
+    public void removeItem(int position) {
+        //realmResults.remove(position);
+        Realm r = Realm.getDefaultInstance();
+        r.beginTransaction();
+        Todo todo = realmResults.get(position);
+        todo.deleteFromRealm();
+        r.commitTransaction();
+
+        notifyItemRemoved(position);
+    }
+
+    public void restoreItem(Todo item, int position) {
+        //realmResults.add(position, item);
+        Realm r = Realm.getDefaultInstance();
+        r.beginTransaction();
+        //r.insert(item);
+        //Log.d("log111", mTmp.toString());
+        r.commitTransaction();
+
+        notifyItemInserted(position);
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
