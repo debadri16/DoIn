@@ -18,6 +18,7 @@ import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
@@ -52,6 +53,8 @@ public class TaskActivity extends AppCompatActivity
 
         setContentView(R.layout.activity_task);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        Intent tmpIntent = getIntent();
+        toolbar.setTitle(tmpIntent.getStringExtra("UserName"));
         setSupportActionBar(toolbar);
 
         coordinatorLayout=findViewById(R.id.coordLayout);
@@ -96,6 +99,11 @@ public class TaskActivity extends AppCompatActivity
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+
+//        Intent tmpIntent = getIntent();
+//        TextView namHeadText=findViewById(R.id.nav_header_txt);
+//        namHeadText.setText(tmpIntent.getStringExtra("UserName"));
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -189,7 +197,7 @@ public class TaskActivity extends AppCompatActivity
             RealmResults<Todo> query = r.where(Todo.class).equalTo("userName", getIntent().getStringExtra("UserName")).findAll();
             query.deleteAllFromRealm();
             r.commitTransaction();
-            Toast.makeText(TaskActivity.this,"Cleared all todo",Toast.LENGTH_LONG).show();
+            Toast.makeText(TaskActivity.this,"Cleared all todo",Toast.LENGTH_SHORT).show();
             onStart();
 
         }

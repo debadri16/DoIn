@@ -7,9 +7,9 @@
     android:layout_height="100dp"
     android:layout_margin="5sp"
     android:layout_marginBottom="5sp"
-    android:elevation="4dp"
-    android:background="@drawable/btn_shape"
+    android:background="@drawable/recycler_shape_white"
     android:clickable="true"
+    android:elevation="4dp"
     android:focusable="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -77,7 +77,7 @@
             app:layout_constraintVertical_bias="0.021" />
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/recycler_swipe_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"

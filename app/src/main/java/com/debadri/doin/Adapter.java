@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +51,13 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
             holder.colorLayout.setBackgroundResource(R.drawable.recycler_shape_red);
         else if(color.equals("Yellow"))
             holder.colorLayout.setBackgroundResource(R.drawable.recycler_shape_yellow);
+
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(view.getContext(),"Swipe left to delete",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
@@ -99,6 +107,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
         private TextView due;
         private ConstraintLayout card;
         private ConstraintLayout colorLayout;
+        private ImageView imageView;
 
         public MyViewHolder(@NonNull View view) {
             super(view);
@@ -107,6 +116,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
             due = view.findViewById(R.id.due_tv);
             card=view.findViewById(R.id.rootView);
             colorLayout=view.findViewById(R.id.recycler_color_consLayout);
+            imageView=view.findViewById(R.id.recycler_swipe_img);
         }
     }
 }
