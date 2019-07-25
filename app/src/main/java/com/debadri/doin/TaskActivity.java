@@ -85,12 +85,12 @@ public class TaskActivity extends AppCompatActivity
         remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Realm r = Realm.getDefaultInstance();
-                r.beginTransaction();
-                RealmResults<Todo> query = r.where(Todo.class).equalTo("userName", getIntent().getStringExtra("UserName")).findAll();
-                query.deleteAllFromRealm();
-                r.commitTransaction();
-                onStart();
+//                Realm r = Realm.getDefaultInstance();
+//                r.beginTransaction();
+//                RealmResults<Todo> query = r.where(Todo.class).equalTo("userName", getIntent().getStringExtra("UserName")).findAll();
+//                query.deleteAllFromRealm();
+//                r.commitTransaction();
+//                onStart();
             }
         });
 
@@ -127,6 +127,11 @@ public class TaskActivity extends AppCompatActivity
 
                 final int position = viewHolder.getAdapterPosition();
                 final Todo item = mAdapter.getData().get(position);
+                String tcolor = item.getColor();
+                String tUname = item.getUserName();
+                String tdet = item.getDetails();
+                String tdate = item.getDuedate();
+                String ttodo = item.getTodoItem();
 
                 mAdapter.removeItem(position);
 
@@ -136,8 +141,9 @@ public class TaskActivity extends AppCompatActivity
                     @Override
                     public void onClick(View view) {
 
-//                        mAdapter.restoreItem(item, position);
-//                        rv.scrollToPosition(position);
+                        mAdapter.restoreItem(tcolor,tUname,tdet,tdate,ttodo, position);
+                        //rv.scrollToPosition(position);
+                        onStart();
                         float x=2;
                     }
                 });
@@ -178,7 +184,14 @@ public class TaskActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Toast.makeText(TaskActivity.this,"Clear all todo",Toast.LENGTH_LONG).show();
+            Realm r = Realm.getDefaultInstance();
+            r.beginTransaction();
+            RealmResults<Todo> query = r.where(Todo.class).equalTo("userName", getIntent().getStringExtra("UserName")).findAll();
+            query.deleteAllFromRealm();
+            r.commitTransaction();
+            Toast.makeText(TaskActivity.this,"Cleared all todo",Toast.LENGTH_LONG).show();
+            onStart();
+
         }
 
         return super.onOptionsItemSelected(item);

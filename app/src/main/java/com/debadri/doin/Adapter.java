@@ -73,15 +73,24 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
         notifyItemRemoved(position);
     }
 
-    public void restoreItem(Todo item, int position) {
+    public void restoreItem(String tcolor,String tUname,String tdet,String tdate,String ttodo, int position) {
         //realmResults.add(position, item);
         Realm r = Realm.getDefaultInstance();
         r.beginTransaction();
         //r.insert(item);
-        //Log.d("log111", mTmp.toString());
-        r.commitTransaction();
+        //Log.d("log111", item);
+        Todo todo = r.createObject(Todo.class);
+        todo.setUserName(tUname);
+        todo.setTodoItem(ttodo);
+        todo.setDetails(tdet);
+        todo.setDuedate(tdate);
+        todo.setColor(tcolor);
 
-        notifyItemInserted(position);
+        r.commitTransaction();
+        r.close();
+
+        //notifyItemInserted(realmResults.size()-1);
+        notifyItemChanged(realmResults.size()-1);
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
