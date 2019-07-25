@@ -67,26 +67,32 @@ public class TodoActivity extends AppCompatActivity {
     }
 
     public void AddTask(View view) {
-        Realm r = Realm.getDefaultInstance();
-        r.beginTransaction();
-        try{
-            Todo todo = r.createObject(Todo.class);
-            todo.setUserName(mUserName);
-            todo.setTodoItem(item.getText().toString());
-            todo.setDetails(details.getText().toString());
-            todo.setDuedate(mDisplayDate.getText().toString());
-            todo.setColor(mstaticSpinner.getSelectedItem().toString());
+
+        if(item.getText().toString().isEmpty() || mDisplayDate.getText().toString().equals("date")){
+            Toast.makeText(this,"Empty item name or date!",Toast.LENGTH_SHORT).show();
+        }
+        else {
+            Realm r = Realm.getDefaultInstance();
+            r.beginTransaction();
+            try {
+
+                Todo todo = r.createObject(Todo.class);
+                todo.setUserName(mUserName);
+                todo.setTodoItem(item.getText().toString());
+                todo.setDetails(details.getText().toString());
+                todo.setDuedate(mDisplayDate.getText().toString());
+                todo.setColor(mstaticSpinner.getSelectedItem().toString());
 //            RealmQuery<Todo> query = r.where(Todo.class).equalTo("userName", mUserName);
 //            RealmResults<Todo> result = query.findAllAsync();
 //            result.load();
-            r.commitTransaction();
-            r.close();
-            Toast.makeText(this,"New todo created",Toast.LENGTH_LONG).show();
-            finish();
-        }
-        catch (Exception e){
-            r.cancelTransaction();
-            Toast.makeText(this,"Failure" + e.getMessage(),Toast.LENGTH_SHORT).show();
+                r.commitTransaction();
+                r.close();
+                Toast.makeText(this, "New todo created", Toast.LENGTH_SHORT).show();
+                finish();
+            } catch (Exception e) {
+                r.cancelTransaction();
+                Toast.makeText(this, "Failure" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

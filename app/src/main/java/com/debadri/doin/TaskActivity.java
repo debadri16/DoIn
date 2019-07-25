@@ -110,7 +110,7 @@ public class TaskActivity extends AppCompatActivity
         //recylcer view
         rv=findViewById(R.id.recyclerTodo);
         Realm r = Realm.getDefaultInstance();
-        RealmQuery<Todo> query = r.where(Todo.class).equalTo("userName", getIntent().getStringExtra("UserName"));
+        RealmQuery<Todo> query = r.where(Todo.class).equalTo("userName", getIntent().getStringExtra("UserName")).sort("todoItem");
         RealmResults<Todo> result = query.findAll();
         //Toast.makeText(this, result.toString(), Toast.LENGTH_LONG).show();
         mAdapter = new Adapter(result,this);

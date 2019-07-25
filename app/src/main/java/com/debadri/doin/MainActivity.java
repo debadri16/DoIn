@@ -64,10 +64,10 @@ public class MainActivity extends AppCompatActivity {
                         obj.setOthers("lol");
                         realm.commitTransaction();
 
-                        Toast.makeText(MainActivity.this, "New User Added", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, "New User Added", Toast.LENGTH_SHORT).show();
 
                     } else {
-                        Toast.makeText(MainActivity.this, "Welcome again", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, "Welcome again", Toast.LENGTH_SHORT).show();
                     }
 
                     Intent intent=new Intent(MainActivity.this, TaskActivity.class);
